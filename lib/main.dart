@@ -13,6 +13,7 @@ void main() {
         )
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         routes: {
           '/': (context) => weatherScreen(),
           'add': (context) => AddData(),

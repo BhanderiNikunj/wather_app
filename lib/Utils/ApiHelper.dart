@@ -5,17 +5,17 @@ import 'package:wather_app/Screen/weather/Model/weatherScreenModel.dart';
 
 class ApiHelper
 {
-  Future<Weather> WeatherApiCall()
+  Future<WeatherModel> WeatherApiCall()
   async {
-    String link = "https://api.openweathermap.org/data/2.5/weather?lat=20%C2%B056%2714.64%22N&lon=77%C2%B046%2746.56%22E&appid=0883637b00b449c808ba083b3c550e8b";
+    String link = "https://api.openweathermap.org/data/2.5/weather?lat=21.1702&lon=72.8311&appid=0883637b00b449c808ba083b3c550e8b";
 
     Uri uri = Uri.parse(link);
 
     var result = await http.get(uri);
 
     var json = jsonDecode(result.body);
-
-    Weather weather = Weather().toJson() as Weather;
-    return weather;
+    print("${json} \n\n\n");
+    WeatherModel weatherModel = WeatherModel.fromJson(json);
+    return weatherModel;
   }
 }

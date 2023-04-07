@@ -5,10 +5,11 @@ import 'package:wather_app/Utils/ApiHelper.dart';
 class WeatherScreenProvider extends ChangeNotifier
 {
     ApiHelper apiHelper = ApiHelper();
-    Weather? w1;
+    WeatherModel? weatherModel;
 
-    Future<void> weatherData()
+    Future<WeatherModel?> weatherData()
     async {
-        w1 = await apiHelper.WeatherApiCall();
+        weatherModel = await apiHelper.WeatherApiCall();
+        return weatherModel;
     }
 }
