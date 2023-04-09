@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -27,9 +25,10 @@ class _weatherScreenState extends State<weatherScreen> {
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder(
-          future: weatherScreenProviderFalse!.weatherData(),
+          future: weatherScreenProviderFalse!.weatherData(weatherScreenProviderTrue!.Name),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
+              print("${snapshot.error}");
               return Text("${snapshot.error}");
             } else if (snapshot.hasData) {
               WeatherModel? weatherModel = snapshot.data;
@@ -57,11 +56,11 @@ class _weatherScreenState extends State<weatherScreen> {
                               decoration: BoxDecoration(),
                               alignment: Alignment.center,
                               child: Text(
-                                "${weatherModel!.name}",
+                                "${weatherModel!.location.name} ${weatherModel.location.region} , ${weatherModel.location.country}",
                                 style: GoogleFonts.alice(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
-                                  fontSize: 60,
+                                  fontSize: 40,
                                 ),
                               ),
                             ),
@@ -71,12 +70,55 @@ class _weatherScreenState extends State<weatherScreen> {
                               decoration: BoxDecoration(),
                               alignment: Alignment.center,
                               child: Text(
-                                "${weatherModel.main.temp} °F",
+                                "${weatherModel.current.tempC} °C",
                                 style: GoogleFonts.alice(
                                   color: Colors.white,
-                                  fontSize: 30,
+                                  fontSize: 60,
                                 ),
                               ),
+                            ),
+                            Column(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Current Time     :-     ${weatherModel.location.localtime}",
+                                    style: GoogleFonts.alice(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 50,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Last Update Time      :-     ${weatherModel.current.lastUpdated}",
+                                    style: GoogleFonts.alice(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 50,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Wind Degree      :-     ${weatherModel.current.windDegree}",
+                                    style: GoogleFonts.alice(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -89,9 +131,10 @@ class _weatherScreenState extends State<weatherScreen> {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                Color(0xff343651),
-                                Color(0x8C54AC),
-                                Color(0xff343651),
+                                Color(0xff1D213E),
+                                Color(0xc3363f6a),
+                                Color(0xc3363f6a),
+                                Color(0xff1D213E),
                               ],
                             ),
                             borderRadius: BorderRadius.only(
@@ -102,14 +145,16 @@ class _weatherScreenState extends State<weatherScreen> {
                           alignment: Alignment.center,
                           child: Column(
                             children: [
+                              SizedBox(height: 30),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Container(
                                       height: 50,
-                                      width: 150,
+                                      width: 175,
                                       decoration: BoxDecoration(
                                         color: Color(0xff312D56),
                                         border: Border.all(
@@ -118,7 +163,7 @@ class _weatherScreenState extends State<weatherScreen> {
                                       ),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "Minimum Temp",
+                                        "Cloud",
                                         style: GoogleFonts.alice(
                                           color: Colors.white,
                                           fontSize: 15,
@@ -130,7 +175,7 @@ class _weatherScreenState extends State<weatherScreen> {
                                     padding: EdgeInsets.all(8.0),
                                     child: Container(
                                       height: 50,
-                                      width: 150,
+                                      width: 175,
                                       decoration: BoxDecoration(
                                         color: Color(0xff312D56),
                                         border: Border.all(
@@ -139,7 +184,7 @@ class _weatherScreenState extends State<weatherScreen> {
                                       ),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "${weatherModel.main.tempMin} °F",
+                                        "${weatherModel.current.cloud}",
                                         style: GoogleFonts.alice(
                                           color: Colors.white,
                                           fontSize: 20,
@@ -150,13 +195,14 @@ class _weatherScreenState extends State<weatherScreen> {
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Container(
                                       height: 50,
-                                      width: 150,
+                                      width: 175,
                                       decoration: BoxDecoration(
                                         color: Color(0xff312D56),
                                         border: Border.all(
@@ -165,7 +211,7 @@ class _weatherScreenState extends State<weatherScreen> {
                                       ),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "Maximum Temp",
+                                        "Wind Speed miter",
                                         style: GoogleFonts.alice(
                                           color: Colors.white,
                                           fontSize: 15,
@@ -177,7 +223,7 @@ class _weatherScreenState extends State<weatherScreen> {
                                     padding: EdgeInsets.all(8.0),
                                     child: Container(
                                       height: 50,
-                                      width: 150,
+                                      width: 175,
                                       decoration: BoxDecoration(
                                         color: Color(0xff312D56),
                                         border: Border.all(
@@ -186,7 +232,7 @@ class _weatherScreenState extends State<weatherScreen> {
                                       ),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "${weatherModel.main.tempMax} °F",
+                                        "${weatherModel.current.windMph} m/h",
                                         style: GoogleFonts.alice(
                                           color: Colors.white,
                                           fontSize: 20,
@@ -197,13 +243,14 @@ class _weatherScreenState extends State<weatherScreen> {
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Container(
                                       height: 50,
-                                      width: 150,
+                                      width: 175,
                                       decoration: BoxDecoration(
                                         color: Color(0xff312D56),
                                         border: Border.all(
@@ -212,7 +259,7 @@ class _weatherScreenState extends State<weatherScreen> {
                                       ),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "Wind Speed",
+                                        "Wind Speed kilometer",
                                         style: GoogleFonts.alice(
                                           color: Colors.white,
                                           fontSize: 15,
@@ -224,7 +271,7 @@ class _weatherScreenState extends State<weatherScreen> {
                                     padding: EdgeInsets.all(8.0),
                                     child: Container(
                                       height: 50,
-                                      width: 150,
+                                      width: 175,
                                       decoration: BoxDecoration(
                                         color: Color(0xff312D56),
                                         border: Border.all(
@@ -233,7 +280,7 @@ class _weatherScreenState extends State<weatherScreen> {
                                       ),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "${weatherModel.wind.speed}",
+                                        "${weatherModel.current.windKph} km/h",
                                         style: GoogleFonts.alice(
                                           color: Colors.white,
                                           fontSize: 20,
@@ -242,6 +289,37 @@ class _weatherScreenState extends State<weatherScreen> {
                                     ),
                                   ),
                                 ],
+                              ),
+                              Expanded(
+                                child: Stack(
+                                  children: [
+                                    Image.asset(
+                                      "Assets/Images/img_2.png",
+                                      height: 100,
+                                    ),
+                                    Positioned(
+                                      bottom: 15,
+                                      left: 75,
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: IconButton(
+                                          onPressed: () {
+                                            Navigator.pushNamed(context, 'add');
+                                          },
+                                          icon: Icon(
+                                            Icons.add,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -252,7 +330,10 @@ class _weatherScreenState extends State<weatherScreen> {
                 ],
               );
             }
-            return CircularProgressIndicator();
+            return Container(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            );
           },
         ),
       ),
