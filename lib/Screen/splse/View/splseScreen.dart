@@ -34,7 +34,7 @@ class _SplseScreenState extends State<SplseScreen> {
               Text(
                 "Weather App",
                 style:
-                    GoogleFonts.alice(color: Color(0xff33495F), fontSize: 50),
+                    GoogleFonts.alice(color: Color(0xff33495F), fontSize: 51),
               )
             ],
           ),
